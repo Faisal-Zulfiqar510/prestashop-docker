@@ -1,0 +1,48 @@
+services:
+  db:
+    image: mariadb:latest
+    container_name: prestashop_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${PS_DB_NAME}
+      MYSQL_USER: ${PS_DB_USER}
+      MYSQL_PASSWORD: ${PS_DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  prestashop:
+    image: prestashop/prestashop:latest
+    container_name: prestashop_app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+    environment:
+      DB_SERVER: db
+      DB_NAME: ${PS_DB_NAME}
+      DB_USER: ${PS_DB_USER}
+      DB_PASSWD: ${PS_DB_PASSWORD}
+      PS_DOMAIN: ${PS_DOMAIN}
+      PS_LANGUAGE: ${PS_LANGUAGE}
+      PS_COUNTRY: ${PS_COUNTRY}
+      PS_INSTALL_AUTO: "1"
+      PS_ERASE_DB: "0"
+      PS_DEV_MODE: "0"
+      PS_ENABLE_SSL: "1"
+      PS_HANDLE_DYNAMIC_DOMAIN: "1"
+      ADMIN_MAIL: ${PS_ADMIN_EMAIL}
+      ADMIN_PASSWD: ${PS_ADMIN_PASSWORD}
+    volumes:
+      - prestashop_data:/var/www/html
+
+volumes:
+  db_data:
+  prestashop_data:
