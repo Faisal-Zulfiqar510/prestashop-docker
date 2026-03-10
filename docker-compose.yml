@@ -17,7 +17,7 @@ services:
       retries: 10
 
   prestashop:
-    image: prestashop/prestashop:latest
+    image: prestashop/prestashop:${PRESTASHOP_VERSION}
     container_name: prestashop_app
     restart: unless-stopped
     depends_on:

@@ -1,6 +1,6 @@
 # prestashop-docker
 
-Simple Docker Compose setup to run the latest PrestaShop with MariaDB.
+Simple Docker Compose setup to run PrestaShop 1.7.6.1 with MariaDB.
 
 ## Quick start
 1. Review and edit `.env` for passwords and admin account settings.
@@ -29,5 +29,6 @@ Default credentials (from `.env`):
 - If the browser auto-adds `:8080`, open the URL in a fresh incognito window.
 
 ## Notes
-- The PrestaShop container uses `prestashop/prestashop:latest`.
+- The PrestaShop container uses `prestashop/prestashop:${PRESTASHOP_VERSION}`.
+- Default PrestaShop version in `.env` is `1.7.6.1`.
 - Data is persisted in Docker volumes: `db_data`, `prestashop_data`.
