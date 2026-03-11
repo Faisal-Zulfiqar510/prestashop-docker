@@ -1,6 +1,6 @@
 services:
   db:
-    image: mariadb:latest
+    image: mariadb:10.5
     container_name: prestashop_db
     restart: unless-stopped
     environment:
@@ -33,11 +33,11 @@ services:
       PS_DOMAIN: ${PS_DOMAIN}
       PS_LANGUAGE: ${PS_LANGUAGE}
       PS_COUNTRY: ${PS_COUNTRY}
-      PS_INSTALL_AUTO: "1"
+      PS_INSTALL_AUTO: "0"
       PS_ERASE_DB: "0"
       PS_DEV_MODE: "0"
-      PS_ENABLE_SSL: "1"
-      PS_HANDLE_DYNAMIC_DOMAIN: "1"
+      PS_ENABLE_SSL: "0"
+      PS_HANDLE_DYNAMIC_DOMAIN: "0"
       ADMIN_MAIL: ${PS_ADMIN_EMAIL}
       ADMIN_PASSWD: ${PS_ADMIN_PASSWORD}
     volumes:
